@@ -1,0 +1,9 @@
+@apiservice_HostAddress = http://localhost:5268
+
+GET {{apiservice_HostAddress}}/enqueue-fail/
+Accept: application/json
+
+###
+
+GET {{apiservice_HostAddress}}/enqueue-success/
+Accept: application/json
