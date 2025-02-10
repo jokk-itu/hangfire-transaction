@@ -43,7 +43,8 @@ var app = builder.Build();
 app
     .MapGet("/enqueue-fail", async (BloggingContext bloggingContext, IBackgroundJobClient backgroundJobClient) =>
     {
-        using var transaction = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled);
+        using var transaction =
+            new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled);
 
         var blog = new Blog();
         bloggingContext.Blogs.Add(blog);
@@ -57,13 +58,13 @@ app
 
         // Fail transaction, which causes rollback when disposing TransactionScope.
         throw new InvalidOperationException();
-    })
-    .WithName("EnqueueThrow");
+    });
 
 app
     .MapGet("/enqueue-success", async (BloggingContext bloggingContext, IBackgroundJobClient backgroundJobClient) =>
     {
-        using var transaction = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled);
+        using var transaction =
+            new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled);
 
         var blog = new Blog();
         bloggingContext.Blogs.Add(blog);
@@ -77,7 +78,6 @@ app
 
         // Blog and Job are persisted, as transaction is committed.
         transaction.Complete();
-    })
-    .WithName("");
+    });
 
 app.Run();
